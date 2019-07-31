@@ -1,5 +1,5 @@
 import express, { json } from "express";
-import { all, get, create } from "./song-storage";
+import { all, get, create, edit } from "./song-storage";
 import { ErrorRequestHandler } from "express-serve-static-core";
 
 const app = express();
@@ -9,7 +9,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
-  console.log(req.url)
+  console.debug(`${req.method} ${req.url}`)
   next();
 })
 
@@ -29,8 +29,14 @@ app.get("/api/v1/songs/:songId", async ( req, res ) => {
   res.json(song);
 });
 
+app.put("/api/v1/songs/:songId", async ( req, res ) => {
+  console.debug(req.body);
+  const song = await edit({...req.body, id: req.params.songId});
+  res.status(200).send(song);
+});
+
 app.post("/api/v1/songs", async ( req, res ) => {
-  console.log(req.body);
+  console.debug(req.body);
   const song = await create(req.body);
   res.status(201).send(song);
 });

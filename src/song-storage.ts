@@ -15,6 +15,12 @@ export function create(song: ISong): Promise<ISong> {
   return Promise.resolve(song);
 }
 
+export function edit(song: ISong): Promise<ISong> {
+  const oldSong = songs.find(s => s.id === song.id);
+  Object.assign(oldSong, song)
+  return Promise.resolve(song);
+}
+
 function trimLines(text: string): string {
   return text
     .split('\n')
