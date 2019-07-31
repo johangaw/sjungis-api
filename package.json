@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node-dev -- src/index.ts"
+    "start": "ts-node-dev -- src/index.ts",
+    "db:reset": "mongorestore seeds/sjungis/songs.bson --drop",
+    "db:dump": "mongodump --db=sjungis --out=seeds"
   },
   "keywords": [],
   "author": "",
