@@ -31,7 +31,7 @@ app.get("/api/v1/songs/:songId", async ( req, res ) => {
 
 app.put("/api/v1/songs/:songId", async ( req, res ) => {
   console.debug(req.body);
-  const song = await edit({...req.body, id: req.params.songId});
+  const song = await edit({...req.body, _id: req.params.songId});
   res.status(200).send(song);
 });
 

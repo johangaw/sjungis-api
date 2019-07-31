@@ -1,6 +1,6 @@
 
 export interface ISong {
-  id: string;
+  _id: string;
   name: string;
   lyrics: string;
   melody: string;
