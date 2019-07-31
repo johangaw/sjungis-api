@@ -1,5 +1,5 @@
-import express from "express";
-import { all, get } from "./song-storage";
+import express, { json } from "express";
+import { all, get, create } from "./song-storage";
 import { ErrorRequestHandler } from "express-serve-static-core";
 
 const app = express();
@@ -12,6 +12,8 @@ app.use((req, res, next) => {
   console.log(req.url)
   next();
 })
+
+app.use(json())
 
 const handleError: ErrorRequestHandler = (err, req, res, next) => {
   res.status(500).json(err);
@@ -29,8 +31,8 @@ app.get("/api/v1/songs/:songId", async ( req, res ) => {
 
 app.post("/api/v1/songs", async ( req, res ) => {
   console.log(req.body);
-  // const song = await get(req.params.songId);
-  res.send('hejsan');
+  const song = await create(req.body);
+  res.status(201).send(song);
 });
 
 
