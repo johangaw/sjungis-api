@@ -1,9 +1,10 @@
 import { ISong } from './etc';
 import { MongoClient, Collection, ObjectId } from 'mongodb';
 
+const MONGO_URL = process.env['MONGODB_URL'] || 'mongodb://localhost:27017'
+
 async function songsCollection(): Promise<Collection<ISong>> {
-  const url = 'mongodb://localhost:27017';
-  const client = await MongoClient.connect(url);
+  const client = await MongoClient.connect(MONGO_URL);
   const db = client.db('sjungis');
   const collection = db.collection('songs');
   return collection;
