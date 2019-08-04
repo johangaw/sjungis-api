@@ -5,15 +5,18 @@ import { ErrorRequestHandler } from "express-serve-static-core";
 const app = express();
 const port = process.env.PORT || 8080;
 
+app.use(json())
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   console.debug(`${req.method} ${req.url}`)
+  if (['post', 'put', 'patch'].includes(req.method.toLowerCase())) {
+    console.debug(req.body);
+  }
   next();
 })
-
-app.use(json())
 
 const handleError: ErrorRequestHandler = (err, req, res, next) => {
   res.status(500).json(err);
@@ -30,13 +33,11 @@ app.get("/api/v1/songs/:songId", async ( req, res ) => {
 });
 
 app.put("/api/v1/songs/:songId", async ( req, res ) => {
-  console.debug(req.body);
   const song = await edit({...req.body, _id: req.params.songId});
   res.status(200).send(song);
 });
 
 app.post("/api/v1/songs", async ( req, res ) => {
-  console.debug(req.body);
   const song = await create(req.body);
   res.status(201).send(song);
 });
