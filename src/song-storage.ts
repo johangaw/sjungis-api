@@ -57,10 +57,10 @@ export async function create(songParams: ISongParams): Promise<ISong> {
 
 export async function edit(song: ISong): Promise<ISong> {
   const [col, client] = await songsCollection();
-  const {name, lyrics, melody} = song;
+  const {name, lyrics, melody, obscene} = song;
   const result = await col.findOneAndUpdate(
     {_id: new ObjectId(song._id)},
-    {$set: {name, lyrics, melody, urlName: await createURL(song.name, song._id)}},
+    {$set: {name, lyrics, melody, obscene, urlName: await createURL(song.name, song._id)}},
     {returnOriginal: false}
   );
   client.close();

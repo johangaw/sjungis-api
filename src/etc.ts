@@ -5,6 +5,7 @@ export interface ISong {
   lyrics: string;
   melody: string;
   urlName: string;
+  obscene: boolean;
 }
 
-export type ISongParams = Pick<ISong, 'name'|'lyrics'|'melody'>
+export type ISongParams = Pick<ISong, 'name'|'lyrics'|'melody'|'obscene'>
